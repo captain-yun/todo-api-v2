@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kitri.todo.mappers.TodoMapper">
+    <sql id="responseColumns">
+        id, content, done
+    </sql>
+    <sql id="requestColumns">
+        content, done
+    </sql>
+    <select id="findAll" resultType="com.kitri.todo.dto.response.ResponseTodo">
+        SELECT * FROM todo;
+    </select>
+    <select id="findById" parameterType="Long" resultType="com.kitri.todo.dto.response.ResponseTodo">
+        SELECT
+        <include refid="responseColumns" />
+        FROM
+        todo
+        WHERE
+        id = #{value}
+    </select>
+
+    <insert id="save" parameterType="com.kitri.todo.dto.request.RequestTodo">
+        INSERT INTO todo (
+        <include refid="requestColumns" />
+        ) VALUES (
+        #{content}
+        , #{done}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.kitri.todo.dto.request.RequestTodo">
+        UPDATE todo
+        SET
+            content = #{content}
+          , done = #{done}
+        WHERE
+            id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM
+            todo
+        WHERE
+            id = #{id}
+    </delete>
+
+</mapper>

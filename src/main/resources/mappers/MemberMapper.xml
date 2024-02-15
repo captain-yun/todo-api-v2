@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kitri.todo.mappers.MemberMapper">
+    <select id="findByEmail" resultType="com.kitri.todo.dto.response.Member">
+        SELECT
+        id, email, name, created_at, modified_at
+        FROM
+        member
+        WHERE
+        email = #{email}
+    </select>
+    <select id="findPasswordByEmail" resultType="String">
+        SELECT
+            password
+        FROM
+        member
+        WHERE
+        email = #{email}
+    </select>
+    <insert id="save" parameterType="com.kitri.todo.dto.request.RequestSignUp">
+        INSERT INTO member ( email, password, name ) VALUES ( #{email}, #{password}, #{name} )
+    </insert>
+
+    <delete id="deleteByEmail">
+        DELETE
+        FROM
+            member
+        WHERE
+            email = #{email}
+    </delete>
+
+</mapper>

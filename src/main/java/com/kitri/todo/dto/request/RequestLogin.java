@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RequestTodo {
-    String id;
-    String content;
-    Boolean done;
-    Long memberId;
+public class RequestLogin {
+    String email;
+    String password;
+    Boolean rememberEmail;
 }

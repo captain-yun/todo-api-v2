@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 @Mapper
 public interface TodoMapper {
-    ArrayList<ResponseTodo> findAll();
+    ArrayList<ResponseTodo> findAll(Long id);
     ResponseTodo findById(Long id);
     void save(RequestTodo todo);
     void update(RequestTodo todo);

@@ -3,13 +3,13 @@
 
 <mapper namespace="com.kitri.todo.mappers.TodoMapper">
     <sql id="responseColumns">
-        id, content, done
+        id, content, done, member_id, created_date, modified_date
     </sql>
     <sql id="requestColumns">
-        content, done
+        content, done, member_id
     </sql>
     <select id="findAll" resultType="com.kitri.todo.dto.response.ResponseTodo">
-        SELECT * FROM todo;
+        SELECT * FROM todo WHERE member_id = #{memberId};
     </select>
     <select id="findById" parameterType="Long" resultType="com.kitri.todo.dto.response.ResponseTodo">
         SELECT
@@ -26,6 +26,7 @@
         ) VALUES (
         #{content}
         , #{done}
+        , #{memberId}
         )
     </insert>
 

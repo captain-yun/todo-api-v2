@@ -26,7 +26,8 @@ public class TodoApiController {
     }
 
     @PutMapping("/{id}")
-    public void toggleCompleted(@PathVariable int id, @RequestBody RequestTodo todo) {
+    public void toggleCompleted(@PathVariable String id, @RequestBody RequestTodo todo) {
+        todo.setId(id);
         todoService.toggleCompleted(todo);
     }
     @DeleteMapping("/{id}")

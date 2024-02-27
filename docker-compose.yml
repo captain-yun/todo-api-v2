@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  database:
+    image: captainyun/todo-mysql:v1
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_DATABASE: todo
+      MYSQL_ROOT_PASSWORD: 1234
+      TZ: 'Asia/Seoul'
+    ports:
+      - "3307:3306"
+    volumes:
+      - todo-init-scripts:/docker-entrypoint-initdb.d
+      - todo-data:/var/lib/mysql
+    networks:
+      - todo-network
+
+  backend:
+    container_name: todo-api-server
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database/todo?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "1234"
+    depends_on:
+      - database
+      - redis
+    networks:
+      - todo-network
+
+  frontend:
+    container_name: todo-vue-server
+    image: captainyun/todo-frontend:v1
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - backend
+    networks:
+      - todo-network
+
+  redis:
+    image: redis:latest
+    container_name: todo-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - todo-network
+volumes:
+  todo-init-scripts:
+  todo-data:
+networks:
+  todo-network:
+    driver: bridge

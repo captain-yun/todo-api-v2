@@ -93,8 +93,10 @@ jobs:
     - name: Deploy Docker image to target server
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.DEPLOY_HOST }}
+        host: 172.20.208.1
+        port: 105
         username: ${{ secrets.DEPLOY_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
+          cd /path/to/your/docker-compose/directory
           docker-compose -f docker-compose.yml up -d

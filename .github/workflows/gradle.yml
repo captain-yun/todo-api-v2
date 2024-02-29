@@ -66,3 +66,24 @@ jobs:
     # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+
+    # Log into Docker Hub or your Docker registry
+    - name: Log into Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    # Build and Push Docker image to Docker Hub or your Docker registry
+    - name: Build and Push Docker image
+      run: |
+        docker build -t my-java-app .
+        docker tag my-java-app:latest captainyun/todo-backend:latest
+        docker push captainyun/todo-backend:latest
+
+    # Deploy Docker image to target server using SSH
+    - name: Deploy Docker image to target server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USERNAME }}@${{ secrets.DEPLOY_HOST }} "cd /path/to/your/docker-compose/directory && docker-compose -f docker-compose.yml up -d"

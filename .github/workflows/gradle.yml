@@ -98,5 +98,5 @@ jobs:
         username: ${{ secrets.DEPLOY_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          cd /path/to/your/docker-compose/directory
+          cd docker
           docker-compose -f docker-compose.yml up -d

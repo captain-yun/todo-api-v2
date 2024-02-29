@@ -97,4 +97,4 @@ jobs:
         username: ${{ secrets.DEPLOY_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USERNAME }}@${{ secrets.DEPLOY_HOST }} "cd /path/to/your/docker-compose/directory && docker-compose -f docker-compose.yml up -d"
+          docker-compose -f docker-compose.yml up -d

@@ -60,7 +60,6 @@ jobs:
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.DEPLOY_HOST }}
-        port: ${{ secrets.DEPLOY_PORT }}
         username: ${{ secrets.DEPLOY_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |

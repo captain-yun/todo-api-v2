@@ -93,8 +93,8 @@ jobs:
     - name: Deploy Docker image to target server
       uses: appleboy/ssh-action@master
       with:
-        host: 172.20.208.1
-        port: 105
+        host: ${{ secrets.DEPLOY_HOST}}
+        port: ${{ secrets.DEPLOY_PORT}}
         username: ${{ secrets.DEPLOY_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
